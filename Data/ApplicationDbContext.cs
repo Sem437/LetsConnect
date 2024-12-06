@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LetsConnect.Models;
 
 namespace LetsConnect.Data
 {
@@ -9,5 +10,6 @@ namespace LetsConnect.Data
             : base(options)
         {
         }
+        public DbSet<LetsConnect.Models.WorkshopModel> WorkshopModel { get; set; } = default!;
     }
 }

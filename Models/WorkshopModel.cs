@@ -38,6 +38,6 @@ namespace LetsConnect.Models
         [Required]
         public string WorkshopType { get; set; } //Lokaal of Theater 
 
-        public Blob? WorkshopIMG { get; set; }
+        public string? WorkshopIMG { get; set; }
     }
 }

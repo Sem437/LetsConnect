@@ -1,0 +1,96 @@
+﻿@model IEnumerable<LetsConnect.Models.WorkshopModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopPlace)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopSignUps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopEndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopTeacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkshopIMG)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopPlace)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopSignUps)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopEndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopTeacher)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkshopIMG)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.WorkshopId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.WorkshopId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.WorkshopId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
