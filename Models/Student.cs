@@ -1,14 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace LetsConnect.Models
 {
-    public class Student
-    {
-        [Key]
-        public int IdStudent { get; set; }
-
-        public string? UserId { get; set; }
-
+    public class Student : IdentityUser
+    {            
         [Required]
         public int StudentNumber { get; set; }
 

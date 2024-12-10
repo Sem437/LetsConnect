@@ -8,7 +8,7 @@ namespace LetsConnect.Models
         public int IdStudentWorkshop { get; set; }
 
         [Required]
-        public int IdStudent { get; set; }
+        public int StudentNumber { get; set; }
         public Student Student { get; set; }
 
         [Required]
