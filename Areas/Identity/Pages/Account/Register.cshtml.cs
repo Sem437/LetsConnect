@@ -26,6 +26,7 @@ namespace LetsConnect.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Student> _signInManager;
         private readonly UserManager<Student> _userManager;
+
         private readonly IUserStore<Student> _userStore;
         private readonly IUserEmailStore<Student> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -33,8 +34,9 @@ namespace LetsConnect.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<Student> userManager,
-            IUserStore<Student> userStore,
             SignInManager<Student> signInManager,
+
+            IUserStore<Student> userStore,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -98,6 +100,18 @@ namespace LetsConnect.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public int StudentNumber { get; set; }
+
+            [Required]
+            public string FirstName{ get; set; }
+
+            [Required]
+            public string Lastname { get; set; }
+
+            [Required]
+            public string StudentClass { get; set; }
         }
 
 
@@ -117,6 +131,13 @@ namespace LetsConnect.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                // Voeg aangepaste velden toe van Student Model
+                user.StudentNumber = Input.StudentNumber;
+                user.FirstName = Input.FirstName;
+                user.Lastname = Input.Lastname;
+                user.StudentClass = Input.StudentClass;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
