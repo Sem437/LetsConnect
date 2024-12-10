@@ -5,7 +5,7 @@ namespace LetsConnect.Models
     public class Student
     {
         [Key]
-        public int Id { get; set; }
+        public int IdStudent { get; set; }
 
         public string? UserId { get; set; }
 
@@ -22,17 +22,5 @@ namespace LetsConnect.Models
 
         [Required]
         public string StudentClass { get; set; }
-
-        [Required]
-        public int StundentWorkshop1 { get; set; }
-
-        [Required]
-        public int StundentWorkshop2 { get; set; }
-
-        [Required]
-        public int StundentWorkshop3 { get; set; }
-
-        [Required]
-        public bool HasMidDay { get; set; } = false; //check om te kijken of student een workshop heeft in de middag
     }
 }

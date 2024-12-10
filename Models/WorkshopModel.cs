@@ -36,6 +36,9 @@ namespace LetsConnect.Models
         public string WorkshopTeacher { get; set; }
 
         [Required]
+        public int WorkshopRonde { get; set; }
+
+        [Required]
         public string WorkshopType { get; set; } //Lokaal of Theater 
 
         public string? WorkshopIMG { get; set; }

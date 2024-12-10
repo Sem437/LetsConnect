@@ -26,6 +26,24 @@ namespace LetsConnect.Controllers
         }
 
         // POST: Index
+        // Studenten gekozen workshops
+        [HttpPost]
+        public async Task<IActionResult> GekozenWorkshop([Bind("Id", "UserId", "StudentNumber", "StundentWorkshop1", "StundentWorkshop2", "StundentWorkshop3")] WorkshopModel workshopModel)
+        {
+            if (workshopModel == null)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(workshopModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
 
         public IActionResult Privacy()
         {

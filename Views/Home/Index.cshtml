@@ -6,8 +6,49 @@
 
 <div>
     @foreach (var Item in Model)
-    {
-        <h1>@Item.WorkshopName</h1>
+    {       
+        <h1 id="workshopName">@Item.WorkshopName</h1>
         <h6>@Item.WorkshopDescription</h6>
+        <h6>Max personen: @Item.WorkshopMax</h6>
+        <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
     }
+</div>
+
+<div>
+    <form>
+        <div>
+           Keuze 1:
+            <select>
+                @foreach(var Item in Model)
+                {
+                    <option>
+                        @Item.WorkshopName
+                    </option>
+                }
+            </select>
+        </div>
+        <div>
+            Keuze 2:
+            <select>
+                @foreach (var Item in Model)
+                {
+                    <option>
+                        @Item.WorkshopName
+                    </option>
+                }
+            </select>
+        </div>
+        <div>
+            Keuze 3:
+            <select>
+                @foreach (var Item in Model)
+                {
+                    <option>
+                        @Item.WorkshopName
+                        
+                    </option>
+                }
+            </select>
+        </div>
+    </form>
 </div>
