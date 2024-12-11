@@ -13,7 +13,7 @@ namespace LetsConnect.Models
         [Required]
         public string FirstName { get; set; }
 
-        public string? inserts { get; set; } //Tussenvoegsel
+        public string? Inserts { get; set; } //Tussenvoegsel
 
         [Required]
         public string  Lastname { get; set; }

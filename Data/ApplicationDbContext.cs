@@ -11,5 +11,7 @@ namespace LetsConnect.Data
         {
         }
         public DbSet<LetsConnect.Models.WorkshopModel> WorkshopModel { get; set; } = default!;
+        public DbSet<LetsConnect.Models.Student> Students { get; set; } = default!;
+        public DbSet<LetsConnect.Models.WorkshopStudents> WorkshopStudents { get; set; } = default!;
     }
 }

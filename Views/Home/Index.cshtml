@@ -5,20 +5,29 @@
 }
 
 <div>
+
     @foreach (var Item in Model)
-    {       
-        <h1 id="workshopName">@Item.WorkshopName</h1>
-        <h6>@Item.WorkshopDescription</h6>
-        <h6>Max personen: @Item.WorkshopMax</h6>
-        <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
+    {
+        <form method="post" action="ChosenWorkshop">
+            <h1 id="workshopName">@Item.WorkshopName</h1>
+            <h6>@Item.WorkshopDescription</h6>
+            <h6>Max personen: @Item.WorkshopMax</h6>
+            <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
+
+            <input type="hidden" name="StudentNumber" value="@ViewBag.StudentNumber" />
+            <input type="hidden" name="WorkshopId" value="@Item.WorkshopId"/>
+            <input type="hidden" name="WorkshopType" value="@Item.WorkshopStartTime" />
+            <input type="submit" value="Aanmelden"/>
+       </form>
     }
 </div>
 
+<!--
 <div>
     <form>
         <div>
-           Keuze 1:
-            <select>
+            <label for="workshopOptie1">Keuze 1:</label>
+            <select name="workshopOptie1">
                 @foreach(var Item in Model)
                 {
                     <option>
@@ -28,8 +37,8 @@
             </select>
         </div>
         <div>
-            Keuze 2:
-            <select>
+            <label name="workshopOptie2">Keuze 2:</label>
+            <select name="workshopOptie2">
                 @foreach (var Item in Model)
                 {
                     <option>
@@ -39,8 +48,8 @@
             </select>
         </div>
         <div>
-            Keuze 3:
-            <select>
+            <label for="workshopOptie3">Keuze 3:</label>
+            <select name="workshopOptie3">
                 @foreach (var Item in Model)
                 {
                     <option>
@@ -52,3 +61,4 @@
         </div>
     </form>
 </div>
+-->
