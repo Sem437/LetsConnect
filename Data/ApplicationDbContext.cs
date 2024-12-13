@@ -4,12 +4,14 @@ using LetsConnect.Models;
 
 namespace LetsConnect.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<StudentModel>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
         public DbSet<LetsConnect.Models.WorkshopModel> WorkshopModel { get; set; } = default!;
+        public DbSet<LetsConnect.Models.StudentModel> Students { get; set; } = default!;
+        public DbSet<LetsConnect.Models.WorkshopStudents> WorkshopStudents { get; set; } = default!;
     }
 }

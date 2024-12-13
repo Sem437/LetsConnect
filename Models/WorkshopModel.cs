@@ -20,8 +20,8 @@ namespace LetsConnect.Models
         [Required]
         public int WorkshopMax { get; set; } //max personen in een workshop
 
-        //hoeveel personen zich aanmelden voor een workshop
-        public int? WorkshopSignUps { get; set; } = 0;
+        [Required]        
+        public int WorkshopSignUps { get; set; } = 0; //hoeveel personen zich aanmelden voor een workshop
 
         [Required]
         public DateOnly WorkshopDate { get; set; }
@@ -34,6 +34,9 @@ namespace LetsConnect.Models
 
         [Required]
         public string WorkshopTeacher { get; set; }
+
+        [Required]
+        public int WorkshopRonde { get; set; }
 
         [Required]
         public string WorkshopType { get; set; } //Lokaal of Theater 
