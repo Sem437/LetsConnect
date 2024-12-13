@@ -18,13 +18,13 @@ namespace LetsConnect.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {
-        private readonly UserManager<Student> _userManager;
-        private readonly SignInManager<Student> _signInManager;
+        private readonly UserManager<StudentModel> _userManager;
+        private readonly SignInManager<StudentModel> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
-            UserManager<Student> userManager,
-            SignInManager<Student> signInManager,
+            UserManager<StudentModel> userManager,
+            SignInManager<StudentModel> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -74,7 +74,7 @@ namespace LetsConnect.Areas.Identity.Pages.Account.Manage
             public string NewEmail { get; set; }
         }
 
-        private async Task LoadAsync(Student user)
+        private async Task LoadAsync(StudentModel user)
         {
             var email = await _userManager.GetEmailAsync(user);
             Email = email;

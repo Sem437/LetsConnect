@@ -17,9 +17,9 @@ namespace LetsConnect.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<StudentModel> _userManager;
 
-        public ConfirmEmailModel(UserManager<Student> userManager)
+        public ConfirmEmailModel(UserManager<StudentModel> userManager)
         {
             _userManager = userManager;
         }

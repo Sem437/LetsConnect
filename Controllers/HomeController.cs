@@ -13,9 +13,9 @@ namespace LetsConnect.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<Student> _userManager;
+        private readonly UserManager<StudentModel> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<Student> userManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<StudentModel> userManager)
         {
             _logger = logger;
             _context = context;
@@ -24,15 +24,12 @@ namespace LetsConnect.Controllers
 
         // GET: Index
         public async Task<IActionResult> Index()
-        {
-            ViewBag.StudentNumber = 0;
+        {           
 
             if (User.Identity.IsAuthenticated)
             {
-                string UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var student = await _userManager.FindByIdAsync(UserId);
-
-                ViewBag.StudentNumber = student.StudentNumber;
+                string IdUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                ViewBag.UserId = IdUser;
             }
 
             var workshops = from w in _context.WorkshopModel select w;
@@ -44,33 +41,24 @@ namespace LetsConnect.Controllers
         // Studenten gekozen workshops
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdStudentWorkshop,StudentId,WorkshopId,WorkshopType")] WorkshopStudents studentWorkshop)
+        public async Task<IActionResult> AddStudent([Bind("IdStudentWorkshop,StudentId,WorkshopId")] WorkshopStudents workshopStudents)
         {
-            if (ModelState.IsValid)
-            {                
-                var student = await _context.Students.FirstOrDefaultAsync(s => s.Id == studentWorkshop.StudentId);
-
-                if (student == null)
+            if(User.Identity.IsAuthenticated)
+            {                            
+                if (ModelState.IsValid)
                 {
-                    // foutmelding als de student niet gevonden is
-                    ModelState.AddModelError("", "Geen student gevonden met dit studentnummer.");
-                    ViewData["WorkshopId"] = new SelectList(_context.WorkshopModel, "WorkshopId", "WorkshopDescription", studentWorkshop.WorkshopId);
-                    return View(studentWorkshop);
+                    _context.Add(workshopStudents);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/Login");
 
-              
-                studentWorkshop.StudentId = student.Id; // Gebruik de Id van AspNetUsers als StudentId
-
-                // Voeg de nieuwe StudentWorkshop toe aan de database
-                _context.Add(studentWorkshop);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
             }
 
-            // Als er een fout is, herlaad de dropdown voor workshops
-            ViewData["WorkshopId"] = new SelectList(_context.WorkshopModel, "WorkshopId", "WorkshopDescription", studentWorkshop.WorkshopId);
-            return View(studentWorkshop);
+            return View(workshopStudents);
         }
 
         public IActionResult Privacy()

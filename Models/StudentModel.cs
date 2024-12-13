@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LetsConnect.Models
 {
-    public class Student : IdentityUser 
+    public class StudentModel : IdentityUser 
     {            
-        public Student() { } // Parameterloze constructor
+        public StudentModel() { } // Parameterloze constructor
 
         [Required]
         public int StudentNumber { get; set; }

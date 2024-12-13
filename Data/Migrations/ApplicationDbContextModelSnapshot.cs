@@ -156,7 +156,7 @@ namespace LetsConnect.Data.Migrations
 
                     b.HasKey("WorkshopId");
 
-                    b.ToTable("WorkshopModel");
+                    b.ToTable("WorkshopModel", (string)null);
                 });
 
             modelBuilder.Entity("LetsConnect.Models.WorkshopStudents", b =>
@@ -176,7 +176,7 @@ namespace LetsConnect.Data.Migrations
 
                     b.HasKey("IdStudentWorkshop");
 
-                    b.ToTable("WorkshopStudents");
+                    b.ToTable("WorkshopStudents", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

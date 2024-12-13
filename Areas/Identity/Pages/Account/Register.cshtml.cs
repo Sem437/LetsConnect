@@ -24,19 +24,19 @@ namespace LetsConnect.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Student> _signInManager;
-        private readonly UserManager<Student> _userManager;
+        private readonly SignInManager<StudentModel> _signInManager;
+        private readonly UserManager<StudentModel> _userManager;
 
-        private readonly IUserStore<Student> _userStore;
-        private readonly IUserEmailStore<Student> _emailStore;
+        private readonly IUserStore<StudentModel> _userStore;
+        private readonly IUserEmailStore<StudentModel> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<Student> userManager,
-            SignInManager<Student> signInManager,
+            UserManager<StudentModel> userManager,
+            SignInManager<StudentModel> signInManager,
 
-            IUserStore<Student> userStore,
+            IUserStore<StudentModel> userStore,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -176,27 +176,27 @@ namespace LetsConnect.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Student CreateUser()
+        private StudentModel CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Student>();
+                return Activator.CreateInstance<StudentModel>();
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(Student)}'. " +
-                    $"Ensure that '{nameof(Student)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(StudentModel)}'. " +
+                    $"Ensure that '{nameof(StudentModel)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<Student> GetEmailStore()
+        private IUserEmailStore<StudentModel> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Student>)_userStore;
+            return (IUserEmailStore<StudentModel>)_userStore;
         }
     }
 }
