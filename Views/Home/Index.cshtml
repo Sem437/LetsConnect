@@ -1,24 +1,37 @@
 ﻿@model IEnumerable<LetsConnect.Models.WorkshopModel>
 
-@{
-    ViewData["Title"] = "Home Page";
+@section indexStyling {
+    <link rel="stylesheet" href="~/css/home/styling.css"/>
 }
 
-<div>
+@{
+    ViewData["Title"] = "Workshops Overzicht";
+}
 
-    @foreach (var Item in Model)
-    {
-        <h1 id="workshopName">@Item.WorkshopName</h1>
-        <h6>@Item.WorkshopDescription</h6>
-        <h6>Max personen: @Item.WorkshopMax</h6>
-        <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
-        <form method="post" asp-action="AddStudent">
-            <input type="hidden" name="StudentId"  value="@ViewBag.UserId"/>           
-            <input type="hidden" name="WorkshopId" value="@Item.WorkshopId"/>
-            <div class="form-group">
-                <input type="submit" value="Aanmelden" class="btn btn-primary" />
-            </div>
-       </form>
-    }
-</div>
 
+        
+        <div class="col-md-8">
+            <h1 class="workshop-header">Workshops (diverse lokalen)</h1>
+            <p>Elke ronde kun je één van de volgende workshops volgen. Alle onderstaande workshops zijn alle drie de workshoprondes beschikbaar.</p>
+
+            @foreach (var Item in Model)
+            {
+                <div class="workshop-card mb-3">
+                    <h5>@Item.WorkshopName</h5>
+                        <div id="ItemInfo-@Item.WorkshopId" style="display:none"> <!-- ItemInfo-1 -->
+                        <p><em>@Item.WorkshopDescription</em></p>
+                        <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
+                        <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>                  
+                    </div>
+
+                    <form method="post" asp-action="AddStudent">
+                        <input type="hidden" name="StudentId" value="@ViewBag.UserId" />
+                        <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
+                        <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
+                    </form>
+                    <button onclick="show('ItemInfo-@Item.WorkshopId')" class="btn btn-primary w-100">Meer info</button>
+                </div>
+            }
+        </div>
+    </div>
+</>
