@@ -18,5 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Lichtgrijze achtergrond */
 }
