@@ -3,13 +3,18 @@
 
 // Write your JavaScript code.
 
-function show(itemId) {
-    var infoDiv = document.getElementById(itemId)
+function toggleInfo(infoId, iconId) {
+    var infoDiv = document.getElementById(infoId);
+    var icon = document.getElementById(iconId);
 
-    if (infoDiv.style.display == "none") {
+    // Toggle visibility
+    if (infoDiv.style.display === "none") {
         infoDiv.style.display = "block";
-    }
-    else {
+        // Change the icon to arrow-up-outline
+        icon.setAttribute("name", "arrow-up-outline");
+    } else {
         infoDiv.style.display = "none";
+        // Change the icon back to arrow-down-outline
+        icon.setAttribute("name", "arrow-down-outline");
     }
 }
