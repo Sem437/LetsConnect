@@ -37,60 +37,21 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <!-- Hero Section -->
-    <div class="hero-section text-center py-5">
-        <h1 class="display-4">Welkom bij Let's Connect!</h1>
-        <p class="lead">Ontdek onze workshops en connect met anderen.</p>
-        <a class="btn btn-primary btn-lg mt-3" href="#workshops" role="button">Bekijk Workshops</a>
-    </div>
+<div>
 
-    <!-- Workshops Section -->
-    <div id="workshops" class="workshops-section mt-5">
-        <h2 class="text-center mb-4">Onze Workshops</h2>
-        <div class="row">
-            @foreach (var Item in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card workshop-card">
-                        <div class="card-body">
-                            <h5 class="card-title">@Item.WorkshopName</h5>
-                            <!-- Collapsible section for description -->
-                            <div class="collapse" id="description-@Item.WorkshopName.Replace(" ", "-")">
-                                <p class="card-text mt-3">@Item.WorkshopDescription</p>
-                            </div>
-                            <!-- Toggle button for collapse -->
-                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#description-@Item.WorkshopName.Replace(" ", "-")" aria-expanded="false" aria-controls="description-@Item.WorkshopName.Replace(" ", "-")">
-                                Meer Info
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-
-    <!-- About Section -->
-    <div class="about-section bg-light py-5 mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Over Let's Connect</h3>
-                <p>
-                    Let's Connect is het platform waar je kunt leren, netwerken en samen plezier kunt hebben.
-                    Onze workshops zijn gericht op het verbeteren van je vaardigheden en het opbouwen van waardevolle relaties.
-                </p>
-                <a href="#" class="btn btn-primary">Lees meer</a>
+    @foreach (var Item in Model)
+    {
+        <h1 id="workshopName">@Item.WorkshopName</h1>
+        <h6>@Item.WorkshopDescription</h6>
+        <h6>Max personen: @Item.WorkshopMax</h6>
+        <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
+        <form method="post" asp-action="AddStudent">
+            <input type="hidden" name="StudentId"  value="@ViewBag.UserId"/>          
+            <input type="hidden" name="WorkshopId" value="@Item.WorkshopId"/>
+            <div class="form-group">
+                <input type="submit" value="Aanmelden" class="btn btn-primary" />
             </div>
-            <div class="col-md-6 text-center">
-                <img src="~/images/about-image.jpg" alt="Over ons" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact Section -->
-    <div class="contact-section text-center py-5">
-        <h3>Neem contact met ons op</h3>
-        <p>Heb je vragen of wil je meer informatie? Laat het ons weten!</p>
-        <a href="mailto:info@letsconnect.com" class="btn btn-outline-primary">Stuur een e-mail</a>
-    </div>
+       </form>
+    }
 </div>
+
