@@ -20,6 +20,7 @@
                     <h5>@Item.WorkshopName</h5>
                         <div id="ItemInfo-@Item.WorkshopId" style="display:none"> <!-- ItemInfo-1 -->
                         <p><em>@Item.WorkshopDescription</em></p>
+                        <p>Plaats: @Item.WorkshopPlace</p>
                         <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
                         <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>                  
                     </div>
@@ -29,7 +30,9 @@
                         <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
                         <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
                     </form>
-                    <button onclick="show('ItemInfo-@Item.WorkshopId')" class="btn btn-primary w-100">Meer info</button>
+                    <button onclick="show('ItemInfo-@Item.WorkshopId')" class="btn btn-primary w-100">
+                <ion-icon name="arrow-down-outline"></ion-icon>
+                    </button>
                 </div>
             }
         </div>

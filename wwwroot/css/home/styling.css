@@ -16,7 +16,7 @@
 }
 
     .workshop-card:hover {
-        background-color: #4142a3; /* Lichtere blauwe kleur bij hover */
+        background-color: #4142a3
     }
 
     .workshop-card h5 {
