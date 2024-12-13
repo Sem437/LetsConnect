@@ -1,0 +1,122 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Zachte achtergrondkleur zoals op de pagina */
+    color: #333; /* Algemene tekstkleur */
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: #f4f4f4; /* Zelfde lichte achtergrondkleur */
+    color: #ff6f1f; /* Oranje accentkleur uit de header */
+    padding: 60px 20px;
+    border-radius: 8px;
+}
+
+    .hero-section h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #ff6f1f;
+    }
+
+    .hero-section .btn {
+        background-color: #2f2e88; /* Donkerblauwe kleur uit de navigatie */
+        color: white;
+        border: 1px solid #2f2e88;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .hero-section .btn:hover {
+            background-color: #ff6f1f; /* Oranje kleur bij hover */
+            color: white;
+            border-color: #ff6f1f;
+        }
+
+/* Workshops Section */
+.workshops-section {
+    padding: 40px 20px;
+}
+
+    .workshops-section h2 {
+        font-size: 2.5rem;
+        color: #ff6f1f; /* Oranje accentkleur */
+        font-weight: bold;
+    }
+
+.workshop-card {
+    background-color: #2f2e88; /* Donkerblauw zoals in de knoppen */
+    color: white; /* Witte tekst */
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .workshop-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .workshop-card .card-title {
+        color: white; /* Witte titeltekst */
+        font-size: 1.25rem;
+    }
+
+    .workshop-card .btn {
+        background-color: #ff6f1f; /* Oranje knopkleur */
+        color: white;
+        border: none;
+    }
+
+        .workshop-card .btn:hover {
+            background-color: #2f2e88; /* Donkerblauw bij hover */
+        }
+
+/* About Section */
+.about-section {
+    padding: 40px 20px;
+    background-color: #fff; /* Witte achtergrond voor contrast */
+    color: #333;
+    border-radius: 8px;
+}
+
+    .about-section h3 {
+        color: #ff6f1f; /* Oranje accentkleur */
+        font-weight: bold;
+    }
+
+    .about-section a {
+        background-color: #2f2e88; /* Donkerblauwe knop */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .about-section a:hover {
+            background-color: #ff6f1f; /* Oranje bij hover */
+        }
+
+/* Contact Section */
+.contact-section {
+    padding: 40px 20px;
+    background-color: #f4f4f4; /* Zachte achtergrondkleur */
+    color: #333;
+    text-align: center;
+}
+
+    .contact-section h3 {
+        color: #ff6f1f; /* Oranje accentkleur */
+        font-weight: bold;
+    }
+
+    .contact-section .btn {
+        background-color: #2f2e88; /* Donkerblauwe knop */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .contact-section .btn:hover {
+            background-color: #ff6f1f; /* Oranje bij hover */
+        }
