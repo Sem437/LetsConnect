@@ -4,6 +4,7 @@ using LetsConnect.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LetsConnect.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210115646_StudentMainModel")]
+    partial class StudentMainModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,9 +46,6 @@ namespace LetsConnect.Data.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Inserts")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
@@ -91,6 +91,9 @@ namespace LetsConnect.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("inserts")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -156,27 +159,7 @@ namespace LetsConnect.Data.Migrations
 
                     b.HasKey("WorkshopId");
 
-                    b.ToTable("WorkshopModel", (string)null);
-                });
-
-            modelBuilder.Entity("LetsConnect.Models.WorkshopStudents", b =>
-                {
-                    b.Property<int>("IdStudentWorkshop")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStudentWorkshop"));
-
-                    b.Property<string>("StudentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WorkshopId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdStudentWorkshop");
-
-                    b.ToTable("WorkshopStudents", (string)null);
+                    b.ToTable("WorkshopModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,8 +1,24 @@
-﻿@{
+﻿@model IEnumerable<LetsConnect.Models.WorkshopModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+
+    @foreach (var Item in Model)
+    {
+        <h1 id="workshopName">@Item.WorkshopName</h1>
+        <h6>@Item.WorkshopDescription</h6>
+        <h6>Max personen: @Item.WorkshopMax</h6>
+        <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
+        <form method="post" asp-action="AddStudent">
+            <input type="hidden" name="StudentId"  value="@ViewBag.UserId"/>          
+            <input type="hidden" name="WorkshopId" value="@Item.WorkshopId"/>
+            <div class="form-group">
+                <input type="submit" value="Aanmelden" class="btn btn-primary" />
+            </div>
+       </form>
+    }
 </div>
+
