@@ -13,7 +13,7 @@
         <h6>Max personen: @Item.WorkshopMax</h6>
         <h6>Aangemelde personen: @Item.WorkshopSignUps</h6>
         <form method="post" asp-action="AddStudent">
-            <input type="hidden" name="StudentId"  value="@ViewBag.UserId"/>          
+            <input type="hidden" name="StudentId"  value="@ViewBag.UserId"/>           
             <input type="hidden" name="WorkshopId" value="@Item.WorkshopId"/>
             <div class="form-group">
                 <input type="submit" value="Aanmelden" class="btn btn-primary" />
