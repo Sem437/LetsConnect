@@ -10,28 +10,34 @@
 
 
         
-        <div class="col-md-8">
-            <h1 class="workshop-header">Workshops (diverse lokalen)</h1>
-            <p>Elke ronde kun je één van de volgende workshops volgen. Alle onderstaande workshops zijn alle drie de workshoprondes beschikbaar.</p>
+<div class="mainContainer">
+    <div class="col-md-8">
+        <h1 class="workshop-header">Workshops (diverse lokalen)</h1>
+        <p>Elke ronde kun je één van de volgende workshops volgen. Alle onderstaande workshops zijn alle drie de workshoprondes beschikbaar.</p>
 
-            @foreach (var Item in Model)
-            {
-                <div class="workshop-card mb-3">
-                    <h5>@Item.WorkshopName</h5>
-                        <div id="ItemInfo-@Item.WorkshopId" style="display:none"> <!-- ItemInfo-1 -->
-                        <p><em>@Item.WorkshopDescription</em></p>
-                        <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
-                        <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>                  
-                    </div>
-
-                    <form method="post" asp-action="AddStudent">
-                        <input type="hidden" name="StudentId" value="@ViewBag.UserId" />
-                        <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
-                        <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
-                    </form>
-                    <button onclick="show('ItemInfo-@Item.WorkshopId')" class="btn btn-primary w-100">Meer info</button>
+        @foreach (var Item in Model)
+        {
+            <div class="workshop-card mb-3">
+                <h5>@Item.WorkshopName</h5>
+                <div id="ItemInfo-@Item.WorkshopId" style="display:none">
+                    <!-- ItemInfo-1 -->
+                    <p><em>@Item.WorkshopDescription</em></p>
+                    <p>Plaats: @Item.WorkshopPlace</p>
+                    <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
+                    <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>
                 </div>
-            }
-        </div>
+
+                <form method="post" asp-action="AddStudent">
+                    <input type="hidden" name="StudentId" value="@ViewBag.UserId" />
+                    <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
+                    <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
+                </form>
+                <button onclick="toggleInfo('ItemInfo-@Item.WorkshopId', 'icon-@Item.WorkshopId')" class="arrowButton">
+                    <ion-icon id="icon-@Item.WorkshopId" name="arrow-down-outline"></ion-icon>
+                </button>
+
+            </div>
+        }
     </div>
-</>
+</div>
+    
