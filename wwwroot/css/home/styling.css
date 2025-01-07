@@ -1,5 +1,9 @@
 ﻿
-
+.mainContainer {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
 .workshop-header {
     font-size: 1.5rem;
     color: #ff6600; /* Oranje kleur */
@@ -16,7 +20,7 @@
 }
 
     .workshop-card:hover {
-        background-color: #4142a3; /* Lichtere blauwe kleur bij hover */
+        background-color: #4142a3
     }
 
     .workshop-card h5 {
@@ -36,3 +40,18 @@
     .btn-primary:hover {
         background-color: #ff4500; /* Donkerdere oranje kleur */
     }
+
+.arrowButton {
+        background-color: transparent;
+        color: white;
+        width: 100%;
+        border: none;      
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        margin-top: 1vh;
+}
+
+
+ 
+
