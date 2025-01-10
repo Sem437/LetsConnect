@@ -38,25 +38,34 @@ namespace LetsConnect.Controllers
         }
 
         // POST: Index
-        // Studenten gekozen workshops
+        // Studenten gekozen workshops        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddStudent([Bind("IdStudentWorkshop,StudentId,WorkshopId")] WorkshopStudents workshopStudents)
-        {
-            if(User.Identity.IsAuthenticated)
-            {                            
-                if (ModelState.IsValid)
-                {
-                    _context.Add(workshopStudents);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            else
+        {              
+            if (ModelState.IsValid)
             {
-                return Redirect("/Identity/Account/Login");
+                _context.Add(workshopStudents);
 
-            }
+                // Id ophalen van aangemelde workshop
+                var workshop = await _context.WorkshopModel.FindAsync(workshopStudents.WorkshopId);
+
+                if (workshop != null)
+                {
+                    workshop.WorkshopSignUps++;
+
+                    if (workshop.WorkshopSignUps > workshop.WorkshopMax)
+                    {
+                        ModelState.AddModelError("", "Workshop is al vol.");
+                        return View(workshop);
+                    }
+                    _context.Update(workshop);
+                }
+
+                // Data in db zetten
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }              
 
             return View(workshopStudents);
         }
