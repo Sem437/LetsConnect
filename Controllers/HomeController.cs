@@ -44,56 +44,35 @@ namespace LetsConnect.Controllers
         // Studenten gekozen workshops        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddStudent(string FirstName, string? Insert, string LastName, string Email)
+        public async Task<IActionResult> SendMail(string FirstName, string Insert, string LastName, string Email, string StudentClass, int WorkshopId)
         {
-            if (!ModelState.IsValid)
+            var registration = new TemporaryWorkshopRegistration
             {
-                TempData["Error"] = "Ongeldige invoer.";
-                return View(TempData);
-            }
+                FirstName = FirstName,
+                Insert = Insert,
+                LastName = LastName,
+                Email = Email,
+                StudentClass = StudentClass,
+                WorkshopId = WorkshopId,
+                ConformationToken = GenerateConfirmationToken()
+            };
 
-            //Email versturen 
-            string subject = "Bevestig je inschrijving";
-            string body = $"Hallo {FirstName}"; 
-            
-            await _emailService.SendEmailAsync(Email, subject, body);
+            _context.Add(registration);
+            await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            var confirmationURL = Url.Action("Confirm", "Home", new { token = registration.ConformationToken }, protocol: Request.Scheme);
+            await _emailService.SendEmailAsync(Email, "Bevestig je workshopinschrijving",
+                $"Hallo {FirstName},<br> Klik op de link om je inschrijving te bevestigen: <br>{confirmationURL}");
+
+            return RedirectToAction(nameof(Index));      
         }
 
-        // POST: Index
-        /* Studenten gekozen workshops        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddStudent([Bind("IdStudentWorkshop,StudentId,WorkshopId")] WorkshopStudents workshopStudents)
-        {              
-            if (ModelState.IsValid)
-            {
-                _context.Add(workshopStudents);
 
-                // Id ophalen van aangemelde workshop
-                var workshop = await _context.WorkshopModel.FindAsync(workshopStudents.WorkshopId);
-
-                if (workshop != null)
-                {
-                    workshop.WorkshopSignUps++;
-
-                    if (workshop.WorkshopSignUps > workshop.WorkshopMax)
-                    {
-                        ModelState.AddModelError("", "Workshop is al vol.");
-                        return View(workshop);
-                    }
-                    _context.Update(workshop);
-                }
-
-                // Data in db zetten
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }              
-
-            return View(workshopStudents);
+        public string GenerateConfirmationToken()
+        {
+            return Guid.NewGuid().ToString();
         }
-        */
+
         public IActionResult Privacy()
         {
             return View();

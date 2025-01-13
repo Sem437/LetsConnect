@@ -33,11 +33,13 @@
                     <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
                 </form>
                 -->
-                <form method="post" asp-action="AddStudent">
+                <form method="post" asp-action="SendMail">
                     <input name="FirstName"/>
                     <input name="Insert"/>
                     <input name="LastName"/>
                     <input name="Email" />
+                    <input name="StudentClass"/>
+                    <input type="hidden" value="@Item.WorkshopId" />
                     <input type="submit"/>
                 </form>
                 <button onclick="toggleInfo('ItemInfo-@Item.WorkshopId', 'icon-@Item.WorkshopId')" class="arrowButton">
