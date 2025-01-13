@@ -1,5 +1,6 @@
 using LetsConnect.Data;
 using LetsConnect.Models;
+using LetsConnect.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<StudentModel>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddTransient<EmailService>(); //Email service toegevoegd
 
 builder.Services.AddControllersWithViews();
 

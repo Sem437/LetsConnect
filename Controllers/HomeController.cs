@@ -1,5 +1,6 @@
 using LetsConnect.Data;
 using LetsConnect.Models;
+using LetsConnect.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,12 +15,14 @@ namespace LetsConnect.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<StudentModel> _userManager;
+        private readonly EmailService _emailService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<StudentModel> userManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<StudentModel> userManager, EmailService emailService)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         // GET: Index
@@ -39,6 +42,27 @@ namespace LetsConnect.Controllers
 
         // POST: Index
         // Studenten gekozen workshops        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddStudent(string FirstName, string? Insert, string LastName, string Email)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Ongeldige invoer.";
+                return View(TempData);
+            }
+
+            //Email versturen 
+            string subject = "Bevestig je inschrijving";
+            string body = $"Hallo {FirstName}"; 
+            
+            await _emailService.SendEmailAsync(Email, subject, body);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Index
+        /* Studenten gekozen workshops        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddStudent([Bind("IdStudentWorkshop,StudentId,WorkshopId")] WorkshopStudents workshopStudents)
@@ -69,7 +93,7 @@ namespace LetsConnect.Controllers
 
             return View(workshopStudents);
         }
-
+        */
         public IActionResult Privacy()
         {
             return View();
