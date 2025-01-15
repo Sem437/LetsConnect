@@ -8,9 +8,8 @@ namespace LetsConnect.Models
         [Key]
         public int IdStudentWorkshop { get; set; }
 
-        [Required]
-        [ForeignKey("Id")]
-        public string StudentId { get; set; } // StudentId = Id niet StudentNumber                
+        [Required]        
+        public string Email { get; set; }              
 
         [Required]
         [ForeignKey("WorkshopId")]

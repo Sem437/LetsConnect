@@ -1,5 +1,6 @@
 using LetsConnect.Data;
 using LetsConnect.Models;
+using LetsConnect.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,12 +15,14 @@ namespace LetsConnect.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<StudentModel> _userManager;
+        private readonly EmailService _emailService;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<StudentModel> userManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<StudentModel> userManager, EmailService emailService)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         // GET: Index
@@ -41,33 +44,79 @@ namespace LetsConnect.Controllers
         // Studenten gekozen workshops        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddStudent([Bind("IdStudentWorkshop,StudentId,WorkshopId")] WorkshopStudents workshopStudents)
-        {              
-            if (ModelState.IsValid)
+        public async Task<IActionResult> SendMail(string FirstName, string Insert, string LastName, string Email, string StudentClass, int WorkshopId)
+        {
+            var registration = new TemporaryWorkshopRegistration
             {
-                _context.Add(workshopStudents);
+                FirstName = FirstName,
+                Insert = Insert,
+                LastName = LastName,
+                Email = Email,
+                StudentClass = StudentClass,
+                WorkshopId = WorkshopId,
+                ConformationToken = GenerateConfirmationToken()
+            };
 
-                // Id ophalen van aangemelde workshop
-                var workshop = await _context.WorkshopModel.FindAsync(workshopStudents.WorkshopId);
+            _context.Add(registration);
+            await _context.SaveChangesAsync();
 
-                if (workshop != null)
+            var confirmationURL = Url.Action("Confirm", "Home", new { token = registration.ConformationToken }, protocol: Request.Scheme);
+            await _emailService.SendEmailAsync(Email, "Bevestig je workshopinschrijving",
+                $"Hallo {FirstName},<br> Klik op de <a href='{confirmationURL}'>Link</a> om je inschrijving te bevestigen.");
+
+            return RedirectToAction(nameof(Index));      
+        }
+
+        // GET: Confirm
+        public async Task<IActionResult> Confirm(string token)
+        {
+            if(string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Geen token");
+            }
+
+            var registration = await _context.TemporaryWorkshopRegistrations
+                .FirstOrDefaultAsync(r => r.ConformationToken == token); // Haalt token op die overeenkomt in db met URL
+
+            if(registration == null)
+            {
+                return BadRequest("Token niet gevonden");
+            }
+
+            //Check of email al in db staat
+            var EmailIsInUserTable = await _context.Students
+                .FirstOrDefaultAsync(e => e.Email == registration.Email);
+
+            if (EmailIsInUserTable == null)
+            {
+                var confirmedRegistration = new StudentModel
                 {
-                    workshop.WorkshopSignUps++;
+                    FirstName = registration.FirstName,
+                    Inserts = registration.Insert,
+                    Lastname = registration.LastName,
+                    Email = registration.Email,
+                    StudentClass = registration.StudentClass
+                };
 
-                    if (workshop.WorkshopSignUps > workshop.WorkshopMax)
-                    {
-                        ModelState.AddModelError("", "Workshop is al vol.");
-                        return View(workshop);
-                    }
-                    _context.Update(workshop);
-                }
+                _context.Add(confirmedRegistration);
+            }
 
-                // Data in db zetten
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }              
+            var WorkshopLinkStudents = new WorkshopStudents
+            { 
+                WorkshopId = registration.WorkshopId,
+                Email = registration.Email
+            };
 
-            return View(workshopStudents);
+            _context.Add(WorkshopLinkStudents);
+            _context.TemporaryWorkshopRegistrations.Remove(registration);
+            _context.SaveChanges();
+
+            return View();
+        }
+
+        public string GenerateConfirmationToken()
+        {
+            return Guid.NewGuid().ToString();
         }
 
         public IActionResult Privacy()
