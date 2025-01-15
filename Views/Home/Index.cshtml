@@ -26,27 +26,21 @@
                     <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
                     <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>
                 </div>
-                <!--
-                <form method="post" asp-action="AddStudent">
-                    <input type="hidden" name="StudentId" value="@ViewBag.UserId" />
-                    <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
-                    <button type="submit" class="btn btn-primary w-100">Aanmelden</button>
-                </form>
-                -->
-                <form method="post" asp-action="SendMail">
-                    <input name="FirstName"/>
-                    <input name="Insert"/>
-                    <input name="LastName"/>
-                    <input name="Email" />
-                    <input name="StudentClass"/>
-                    <input type="hidden" value="@Item.WorkshopId" />
-                    <input type="submit"/>
-                </form>
+                <div>
+                    <form method="post" asp-action="SendMail">
+                        <input name="FirstName" placeholder="Voornaam" required />
+                        <input name="Insert" placeholder="Tussenvoegsel" />
+                        <input name="LastName" placeholder="Achternaam" required />
+                        <input name="Email" placeholder="Email" required />
+                        <input name="StudentClass" placeholder="Klas" required />
+                        <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
+                        <input type="submit" value="Aanmelden" />
+                    </form>
+                </div>
                 <button onclick="toggleInfo('ItemInfo-@Item.WorkshopId', 'icon-@Item.WorkshopId')" class="arrowButton">
                     <ion-icon id="icon-@Item.WorkshopId" name="arrow-down-outline"></ion-icon>
                 </button>
-
-            </div>
+            </div>           
         }
     </div>
 </div>
