@@ -101,13 +101,13 @@ namespace LetsConnect.Controllers
                 _context.Add(confirmedRegistration);
             }
 
-            var link = new WorkshopStudents
+            var WorkshopLinkStudents = new WorkshopStudents
             { 
                 WorkshopId = registration.WorkshopId,
                 Email = registration.Email
             };
 
-
+            _context.Add(WorkshopLinkStudents);
             _context.TemporaryWorkshopRegistrations.Remove(registration);
             _context.SaveChanges();
 
