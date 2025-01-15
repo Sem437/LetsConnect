@@ -62,11 +62,57 @@ namespace LetsConnect.Controllers
 
             var confirmationURL = Url.Action("Confirm", "Home", new { token = registration.ConformationToken }, protocol: Request.Scheme);
             await _emailService.SendEmailAsync(Email, "Bevestig je workshopinschrijving",
-                $"Hallo {FirstName},<br> Klik op de link om je inschrijving te bevestigen: <br>{confirmationURL}");
+                $"Hallo {FirstName},<br> Klik op de <a href='{confirmationURL}'>Link</a> om je inschrijving te bevestigen.");
 
             return RedirectToAction(nameof(Index));      
         }
 
+        // GET: Confirm
+        public async Task<IActionResult> Confirm(string token)
+        {
+            if(string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Geen token");
+            }
+
+            var registration = await _context.TemporaryWorkshopRegistrations
+                .FirstOrDefaultAsync(r => r.ConformationToken == token); // Haalt token op die overeenkomt in db met URL
+
+            if(registration == null)
+            {
+                return BadRequest("Token niet gevonden");
+            }
+
+            //Check of email al in db staat
+            var EmailIsInUserTable = await _context.Students
+                .FirstOrDefaultAsync(e => e.Email == registration.Email);
+
+            if (EmailIsInUserTable == null)
+            {
+                var confirmedRegistration = new StudentModel
+                {
+                    FirstName = registration.FirstName,
+                    Inserts = registration.Insert,
+                    Lastname = registration.LastName,
+                    Email = registration.Email,
+                    StudentClass = registration.StudentClass
+                };
+
+                _context.Add(confirmedRegistration);
+            }
+
+            var link = new WorkshopStudents
+            { 
+                WorkshopId = registration.WorkshopId,
+                Email = registration.Email
+            };
+
+
+            _context.TemporaryWorkshopRegistrations.Remove(registration);
+            _context.SaveChanges();
+
+            return View();
+        }
 
         public string GenerateConfirmationToken()
         {
