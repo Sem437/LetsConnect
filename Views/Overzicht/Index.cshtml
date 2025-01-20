@@ -1,0 +1,22 @@
+﻿@model List<WorkshopStudentOverview>
+
+<h1>Overzicht van Workshops en Studenten</h1>
+
+@foreach (var workshop in Model)
+{
+    <h2>@workshop.WorkshopName</h2>
+
+    @if (workshop.studentEmails.Any())
+    {
+        <ul>
+            @foreach (var email in workshop.studentEmails)
+            {
+                <li>@email</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Geen studenten voor deze workshop.</p>
+    }
+}

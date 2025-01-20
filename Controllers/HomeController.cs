@@ -75,45 +75,70 @@ namespace LetsConnect.Controllers
                 return BadRequest("Geen token");
             }
 
-            var registration = await _context.TemporaryWorkshopRegistrations
+            // Begin van transactie
+            // Voert alles uit of niks
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var registration = await _context.TemporaryWorkshopRegistrations
                 .FirstOrDefaultAsync(r => r.ConformationToken == token); // Haalt token op die overeenkomt in db met URL
 
-            if(registration == null)
-            {
-                return BadRequest("Token niet gevonden");
-            }
-
-            //Check of email al in db staat
-            var EmailIsInUserTable = await _context.Students
-                .FirstOrDefaultAsync(e => e.Email == registration.Email);
-
-            if (EmailIsInUserTable == null)
-            {
-                var confirmedRegistration = new StudentModel
+                if (registration == null)
                 {
-                    FirstName = registration.FirstName,
-                    Inserts = registration.Insert,
-                    Lastname = registration.LastName,
-                    Email = registration.Email,
-                    StudentClass = registration.StudentClass
+                    return BadRequest("Token niet gevonden");
+                }
+
+                //Check of email al in db staat
+                var EmailIsInUserTable = await _context.Students
+                    .FirstOrDefaultAsync(e => e.Email == registration.Email);
+
+                if (EmailIsInUserTable == null)
+                {
+                    // Gebruiker in de Usertabel zetten
+                    var confirmedRegistration = new StudentModel
+                    {
+                        FirstName = registration.FirstName,
+                        Inserts = registration.Insert,
+                        Lastname = registration.LastName,
+                        Email = registration.Email,
+                        StudentClass = registration.StudentClass
+                    };
+
+                    _context.Add(confirmedRegistration);
+                }
+
+                // Aanmelding koppelen met workshop
+                var WorkshopLinkStudents = new WorkshopStudents
+                {
+                    WorkshopId = registration.WorkshopId,
+                    Email = registration.Email
                 };
 
-                _context.Add(confirmedRegistration);
+                // Haalt aangemelde workshop op
+                var workshop = await _context.WorkshopModel
+                    .FirstOrDefaultAsync(w => w.WorkshopId == registration.WorkshopId);
+
+                if (workshop != null)
+                {
+                    // Aangemelden mensen updaten
+                    workshop.WorkshopSignUps++;
+                    _context.Update(workshop);
+                }                           
+
+                _context.Add(WorkshopLinkStudents);
+                _context.TemporaryWorkshopRegistrations.Remove(registration);
+                _context.SaveChanges();
+                await transaction.CommitAsync();
             }
-
-            var WorkshopLinkStudents = new WorkshopStudents
-            { 
-                WorkshopId = registration.WorkshopId,
-                Email = registration.Email
-            };
-
-            _context.Add(WorkshopLinkStudents);
-            _context.TemporaryWorkshopRegistrations.Remove(registration);
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                transaction.Rollback(); // Als transactie vaalt wordt alles ongedaan gemaakt
+            }
 
             return View();
         }
 
+        // Maakt token aan die we gebruiken voor het bevestigen
         public string GenerateConfirmationToken()
         {
             return Guid.NewGuid().ToString();
