@@ -22,8 +22,21 @@ namespace LetsConnect.Controllers
         // GET: Overzicht
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TemporaryWorkshopRegistrations.ToListAsync());
+            var workshopsWithStudents = await _context.WorkshopModel
+         .Select(workshop => new WorkshopStudentOverview
+         {
+             WorkshopName = workshop.WorkshopName,
+             studentEmails = _context.WorkshopStudents
+                 .Where(student => student.WorkshopId == workshop.WorkshopId)
+                 .Select(student => student.Email)                 
+                 .ToList(),
+           
+         })
+         .ToListAsync();
+
+            return View(workshopsWithStudents);
         }
+
 
         // GET: Overzicht/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,14 +46,14 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var temporaryWorkshopRegistration = await _context.TemporaryWorkshopRegistrations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (temporaryWorkshopRegistration == null)
+            var workshopStudents = await _context.WorkshopStudents
+                .FirstOrDefaultAsync(m => m.IdStudentWorkshop == id);
+            if (workshopStudents == null)
             {
                 return NotFound();
             }
 
-            return View(temporaryWorkshopRegistration);
+            return View(workshopStudents);
         }
 
         // GET: Overzicht/Create
@@ -54,15 +67,15 @@ namespace LetsConnect.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,FirstName,Insert,LastName,StudentClass,WorkshopId,IsConfirmed,ConformationToken")] TemporaryWorkshopRegistration temporaryWorkshopRegistration)
+        public async Task<IActionResult> Create([Bind("IdStudentWorkshop,Email,WorkshopId")] WorkshopStudents workshopStudents)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(temporaryWorkshopRegistration);
+                _context.Add(workshopStudents);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(temporaryWorkshopRegistration);
+            return View(workshopStudents);
         }
 
         // GET: Overzicht/Edit/5
@@ -73,12 +86,12 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var temporaryWorkshopRegistration = await _context.TemporaryWorkshopRegistrations.FindAsync(id);
-            if (temporaryWorkshopRegistration == null)
+            var workshopStudents = await _context.WorkshopStudents.FindAsync(id);
+            if (workshopStudents == null)
             {
                 return NotFound();
             }
-            return View(temporaryWorkshopRegistration);
+            return View(workshopStudents);
         }
 
         // POST: Overzicht/Edit/5
@@ -86,9 +99,9 @@ namespace LetsConnect.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,FirstName,Insert,LastName,StudentClass,WorkshopId,IsConfirmed,ConformationToken")] TemporaryWorkshopRegistration temporaryWorkshopRegistration)
+        public async Task<IActionResult> Edit(int id, [Bind("IdStudentWorkshop,Email,WorkshopId")] WorkshopStudents workshopStudents)
         {
-            if (id != temporaryWorkshopRegistration.Id)
+            if (id != workshopStudents.IdStudentWorkshop)
             {
                 return NotFound();
             }
@@ -97,12 +110,12 @@ namespace LetsConnect.Controllers
             {
                 try
                 {
-                    _context.Update(temporaryWorkshopRegistration);
+                    _context.Update(workshopStudents);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TemporaryWorkshopRegistrationExists(temporaryWorkshopRegistration.Id))
+                    if (!WorkshopStudentsExists(workshopStudents.IdStudentWorkshop))
                     {
                         return NotFound();
                     }
@@ -113,7 +126,7 @@ namespace LetsConnect.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(temporaryWorkshopRegistration);
+            return View(workshopStudents);
         }
 
         // GET: Overzicht/Delete/5
@@ -124,14 +137,14 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var temporaryWorkshopRegistration = await _context.TemporaryWorkshopRegistrations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (temporaryWorkshopRegistration == null)
+            var workshopStudents = await _context.WorkshopStudents
+                .FirstOrDefaultAsync(m => m.IdStudentWorkshop == id);
+            if (workshopStudents == null)
             {
                 return NotFound();
             }
 
-            return View(temporaryWorkshopRegistration);
+            return View(workshopStudents);
         }
 
         // POST: Overzicht/Delete/5
@@ -139,19 +152,19 @@ namespace LetsConnect.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var temporaryWorkshopRegistration = await _context.TemporaryWorkshopRegistrations.FindAsync(id);
-            if (temporaryWorkshopRegistration != null)
+            var workshopStudents = await _context.WorkshopStudents.FindAsync(id);
+            if (workshopStudents != null)
             {
-                _context.TemporaryWorkshopRegistrations.Remove(temporaryWorkshopRegistration);
+                _context.WorkshopStudents.Remove(workshopStudents);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TemporaryWorkshopRegistrationExists(int id)
+        private bool WorkshopStudentsExists(int id)
         {
-            return _context.TemporaryWorkshopRegistrations.Any(e => e.Id == id);
+            return _context.WorkshopStudents.Any(e => e.IdStudentWorkshop == id);
         }
     }
 }
