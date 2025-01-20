@@ -46,6 +46,24 @@ namespace LetsConnect.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendMail(string FirstName, string Insert, string LastName, string Email, string StudentClass, int WorkshopId)
         {
+            // Get max workshopSignsUp
+            var maxSignUpsWorkshop = await _context.WorkshopModel
+                .Where(s => s.WorkshopId == WorkshopId)
+                .Select(s => s.WorkshopMax)
+                .FirstOrDefaultAsync();
+
+            // Get hoeveelheid mensen die zich aanmelden
+            var SingsUp = await _context.WorkshopModel
+                .Where(s => s.WorkshopId == WorkshopId)
+                .Select(s => s.WorkshopSignUps)
+                .FirstOrDefaultAsync();
+
+            if(SingsUp >= maxSignUpsWorkshop)
+            {
+                TempData[$"ErrorMessage_{WorkshopId}"] = "Workshop is vol.";
+                return RedirectToAction("Index", new {id = WorkshopId});
+            }
+
             var registration = new TemporaryWorkshopRegistration
             {
                 FirstName = FirstName,

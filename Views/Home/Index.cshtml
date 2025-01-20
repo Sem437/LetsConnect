@@ -27,6 +27,15 @@
                     <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>
                 </div>
                 <div>
+                    @{
+                        var errorMessageKey = $"ErrorMessage_{Item.WorkshopId}"; 
+                    }
+                    @if (TempData[errorMessageKey] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <p>@TempData[errorMessageKey]</p>
+                        </div>
+                    }
                     <form method="post" asp-action="SendMail">
                         <input name="FirstName" placeholder="Voornaam" required />
                         <input name="Insert" placeholder="Tussenvoegsel" />
