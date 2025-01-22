@@ -44,7 +44,7 @@ namespace LetsConnect.Controllers
         // Studenten gekozen workshops        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendMail(string FirstName, string Insert, string LastName, string Email, string StudentClass, int WorkshopId)
+        public async Task<IActionResult> SendMail(string FirstName, string Insert, string LastName, string Email, string StudentClass, int WorkshopId, int WorkshopTimeId)
         {
             // Get max workshopSignsUp
             var maxSignUpsWorkshop = await _context.WorkshopModel
@@ -72,6 +72,7 @@ namespace LetsConnect.Controllers
                 Email = Email,
                 StudentClass = StudentClass,
                 WorkshopId = WorkshopId,
+                WorkshopTimeId = WorkshopTimeId,
                 ConformationToken = GenerateConfirmationToken()
             };
 
@@ -129,6 +130,7 @@ namespace LetsConnect.Controllers
                 var WorkshopLinkStudents = new WorkshopStudents
                 {
                     WorkshopId = registration.WorkshopId,
+                    WorkshopTimeId = registration.WorkshopTimeId,
                     Email = registration.Email
                 };
 

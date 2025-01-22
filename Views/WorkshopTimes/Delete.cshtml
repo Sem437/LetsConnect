@@ -1,4 +1,4 @@
-﻿@model LetsConnect.Models.WorkshopModel
+﻿@model LetsConnect.Models.WorkshopTimes
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,38 +9,26 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>WorkshopModel</h4>
+    <h4>WorkshopTimes</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopName)
+            @Html.DisplayNameFor(model => model.WorkshopId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopName)
+            @Html.DisplayFor(model => model.WorkshopId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopDescription)
+            @Html.DisplayNameFor(model => model.WorkshopRonde)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopDescription)
+            @Html.DisplayFor(model => model.WorkshopRonde)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.WorkshopPlace)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.WorkshopPlace)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopMax)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopMax)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopSignUps)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopSignUps)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.WorkshopDate)
@@ -66,22 +54,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.WorkshopTeacher)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkshopIMG)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkshopIMG)
-        </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="WorkshopId" />
+        <input type="hidden" asp-for="WorkshopTimeId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

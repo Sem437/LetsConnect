@@ -24,7 +24,8 @@ namespace LetsConnect.Models
         [Required]
         public int WorkshopId { get; set; }
 
-        public bool IsConfirmed { get; set; } = false;
+        [Required]
+        public int WorkshopTimeId { get; set; }
 
         public string ConformationToken { get; set; }
     }

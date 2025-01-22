@@ -1,19 +1,18 @@
 ﻿@model LetsConnect.Models.WorkshopModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>WorkshopModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="WorkshopId" />
             <div class="form-group">
                 <label asp-for="WorkshopName" class="control-label"></label>
                 <input asp-for="WorkshopName" class="form-control" />
@@ -23,11 +22,6 @@
                 <label asp-for="WorkshopDescription" class="control-label"></label>
                 <input asp-for="WorkshopDescription" class="form-control" />
                 <span asp-validation-for="WorkshopDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkshopPlace" class="control-label"></label>
-                <input asp-for="WorkshopPlace" class="form-control" />
-                <span asp-validation-for="WorkshopPlace" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WorkshopMax" class="control-label"></label>
@@ -40,26 +34,6 @@
                 <span asp-validation-for="WorkshopSignUps" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WorkshopDate" class="control-label"></label>
-                <input asp-for="WorkshopDate" class="form-control" />
-                <span asp-validation-for="WorkshopDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkshopStartTime" class="control-label"></label>
-                <input asp-for="WorkshopStartTime" class="form-control" />
-                <span asp-validation-for="WorkshopStartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkshopEndTime" class="control-label"></label>
-                <input asp-for="WorkshopEndTime" class="form-control" />
-                <span asp-validation-for="WorkshopEndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkshopTeacher" class="control-label"></label>
-                <input asp-for="WorkshopTeacher" class="form-control" />
-                <span asp-validation-for="WorkshopTeacher" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="WorkshopType" class="control-label"></label>
                 <input asp-for="WorkshopType" class="form-control" />
                 <span asp-validation-for="WorkshopType" class="text-danger"></span>
@@ -70,7 +44,7 @@
                 <span asp-validation-for="WorkshopIMG" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

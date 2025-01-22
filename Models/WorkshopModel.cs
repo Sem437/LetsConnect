@@ -12,31 +12,13 @@ namespace LetsConnect.Models
         public string WorkshopName { get; set; }
 
         [Required]
-        public string WorkshopDescription { get; set; }
-
-        [Required]
-        public string WorkshopPlace { get; set; }
+        public string WorkshopDescription { get; set; }       
 
         [Required]
         public int WorkshopMax { get; set; } //max personen in een workshop
 
         [Required]        
-        public int WorkshopSignUps { get; set; } = 0; //hoeveel personen zich aanmelden voor een workshop
-
-        [Required]
-        public DateOnly WorkshopDate { get; set; }
-
-        [Required]
-        public TimeOnly WorkshopStartTime { get; set; }
-
-        [Required]
-        public TimeOnly WorkshopEndTime { get; set; }
-
-        [Required]
-        public string WorkshopTeacher { get; set; }
-
-        [Required]
-        public int WorkshopRonde { get; set; }
+        public int WorkshopSignUps { get; set; } = 0; //hoeveel personen zich aanmelden voor een workshop        
 
         [Required]
         public string WorkshopType { get; set; } //Lokaal of Theater 

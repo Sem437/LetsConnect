@@ -14,5 +14,9 @@ namespace LetsConnect.Models
         [Required]
         [ForeignKey("WorkshopId")]
         public int WorkshopId { get; set; }
+
+        [Required]
+        [ForeignKey("WorkshopTimeId")]
+        public int WorkshopTimeId { get; set; }
     }
 }

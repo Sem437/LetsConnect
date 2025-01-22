@@ -22,7 +22,7 @@
                 <div id="ItemInfo-@Item.WorkshopId" style="display:none">
                     <!-- ItemInfo-1 -->
                     <p><em>@Item.WorkshopDescription</em></p>
-                    <p>Plaats: @Item.WorkshopPlace</p>
+                    <!--Plaats: Item.WorkshopPlace</p>-->
                     <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
                     <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>
                 </div>
@@ -42,6 +42,7 @@
                         <input name="LastName" placeholder="Achternaam" required />
                         <input name="Email" placeholder="Email" required />
                         <input name="StudentClass" placeholder="Klas" required />
+                        <input name="WorkshopTimeId" placeholder="Ronde" required />
                         <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
                         <input type="submit" value="Aanmelden" />
                     </form>
