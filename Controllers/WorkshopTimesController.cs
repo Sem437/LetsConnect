@@ -10,22 +10,22 @@ using LetsConnect.Models;
 
 namespace LetsConnect.Controllers
 {
-    public class WorkshopController : Controller
+    public class WorkshopTimesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public WorkshopController(ApplicationDbContext context)
+        public WorkshopTimesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Workshop
+        // GET: WorkshopTimes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WorkshopModel.ToListAsync());
+            return View(await _context.WorkshopTimes.ToListAsync());
         }
 
-        // GET: Workshop/Details/5
+        // GET: WorkshopTimes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var workshopModel = await _context.WorkshopModel
-                .FirstOrDefaultAsync(m => m.WorkshopId == id);
-            if (workshopModel == null)
+            var workshopTimes = await _context.WorkshopTimes
+                .FirstOrDefaultAsync(m => m.WorkshopTimeId == id);
+            if (workshopTimes == null)
             {
                 return NotFound();
             }
 
-            return View(workshopModel);
+            return View(workshopTimes);
         }
 
-        // GET: Workshop/Create
+        // GET: WorkshopTimes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Workshop/Create
+        // POST: WorkshopTimes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WorkshopId,WorkshopName,WorkshopDescription,WorkshopPlace,WorkshopMax,WorkshopSignUps,WorkshopDate,WorkshopStartTime,WorkshopEndTime,WorkshopTeacher,WorkshopType,WorkshopIMG")] WorkshopModel workshopModel)
+        public async Task<IActionResult> Create([Bind("WorkshopTimeId,WorkshopId,WorkshopRonde,WorkshopPlace,WorkshopDate,WorkshopStartTime,WorkshopEndTime,WorkshopTeacher")] WorkshopTimes workshopTimes)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(workshopModel);
+                _context.Add(workshopTimes);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(workshopModel);
+            return View(workshopTimes);
         }
 
-        // GET: Workshop/Edit/5
+        // GET: WorkshopTimes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var workshopModel = await _context.WorkshopModel.FindAsync(id);
-            if (workshopModel == null)
+            var workshopTimes = await _context.WorkshopTimes.FindAsync(id);
+            if (workshopTimes == null)
             {
                 return NotFound();
             }
-            return View(workshopModel);
+            return View(workshopTimes);
         }
 
-        // POST: Workshop/Edit/5
+        // POST: WorkshopTimes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WorkshopId,WorkshopName,WorkshopDescription,WorkshopPlace,WorkshopMax,WorkshopSignUps,WorkshopDate,WorkshopStartTime,WorkshopEndTime,WorkshopTeacher,WorkshopType,WorkshopIMG")] WorkshopModel workshopModel)
+        public async Task<IActionResult> Edit(int id, [Bind("WorkshopTimeId,WorkshopId,WorkshopRonde,WorkshopPlace,WorkshopDate,WorkshopStartTime,WorkshopEndTime,WorkshopTeacher")] WorkshopTimes workshopTimes)
         {
-            if (id != workshopModel.WorkshopId)
+            if (id != workshopTimes.WorkshopTimeId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace LetsConnect.Controllers
             {
                 try
                 {
-                    _context.Update(workshopModel);
+                    _context.Update(workshopTimes);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WorkshopModelExists(workshopModel.WorkshopId))
+                    if (!WorkshopTimesExists(workshopTimes.WorkshopTimeId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace LetsConnect.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(workshopModel);
+            return View(workshopTimes);
         }
 
-        // GET: Workshop/Delete/5
+        // GET: WorkshopTimes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace LetsConnect.Controllers
                 return NotFound();
             }
 
-            var workshopModel = await _context.WorkshopModel
-                .FirstOrDefaultAsync(m => m.WorkshopId == id);
-            if (workshopModel == null)
+            var workshopTimes = await _context.WorkshopTimes
+                .FirstOrDefaultAsync(m => m.WorkshopTimeId == id);
+            if (workshopTimes == null)
             {
                 return NotFound();
             }
 
-            return View(workshopModel);
+            return View(workshopTimes);
         }
 
-        // POST: Workshop/Delete/5
+        // POST: WorkshopTimes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var workshopModel = await _context.WorkshopModel.FindAsync(id);
-            if (workshopModel != null)
+            var workshopTimes = await _context.WorkshopTimes.FindAsync(id);
+            if (workshopTimes != null)
             {
-                _context.WorkshopModel.Remove(workshopModel);
+                _context.WorkshopTimes.Remove(workshopTimes);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WorkshopModelExists(int id)
+        private bool WorkshopTimesExists(int id)
         {
-            return _context.WorkshopModel.Any(e => e.WorkshopId == id);
+            return _context.WorkshopTimes.Any(e => e.WorkshopTimeId == id);
         }
     }
 }

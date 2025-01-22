@@ -22,17 +22,27 @@
                 <div id="ItemInfo-@Item.WorkshopId" style="display:none">
                     <!-- ItemInfo-1 -->
                     <p><em>@Item.WorkshopDescription</em></p>
-                    <p>Plaats: @Item.WorkshopPlace</p>
+                    <!--Plaats: Item.WorkshopPlace</p>-->
                     <p><strong>Max personen:</strong> @Item.WorkshopMax</p>
                     <p><strong>Aangemelde personen:</strong> @Item.WorkshopSignUps</p>
                 </div>
                 <div>
+                    @{
+                        var errorMessageKey = $"ErrorMessage_{Item.WorkshopId}"; 
+                    }
+                    @if (TempData[errorMessageKey] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <p>@TempData[errorMessageKey]</p>
+                        </div>
+                    }
                     <form method="post" asp-action="SendMail">
                         <input name="FirstName" placeholder="Voornaam" required />
                         <input name="Insert" placeholder="Tussenvoegsel" />
                         <input name="LastName" placeholder="Achternaam" required />
                         <input name="Email" placeholder="Email" required />
                         <input name="StudentClass" placeholder="Klas" required />
+                        <input name="WorkshopTimeId" placeholder="Ronde" required />
                         <input type="hidden" name="WorkshopId" value="@Item.WorkshopId" />
                         <input type="submit" value="Aanmelden" />
                     </form>

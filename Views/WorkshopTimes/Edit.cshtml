@@ -1,0 +1,65 @@
+﻿@model LetsConnect.Models.WorkshopTimes
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>WorkshopTimes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="WorkshopTimeId" />
+            <div class="form-group">
+                <label asp-for="WorkshopId" class="control-label"></label>
+                <input asp-for="WorkshopId" class="form-control" />
+                <span asp-validation-for="WorkshopId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopRonde" class="control-label"></label>
+                <input asp-for="WorkshopRonde" class="form-control" />
+                <span asp-validation-for="WorkshopRonde" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopPlace" class="control-label"></label>
+                <input asp-for="WorkshopPlace" class="form-control" />
+                <span asp-validation-for="WorkshopPlace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopDate" class="control-label"></label>
+                <input asp-for="WorkshopDate" class="form-control" />
+                <span asp-validation-for="WorkshopDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopStartTime" class="control-label"></label>
+                <input asp-for="WorkshopStartTime" class="form-control" />
+                <span asp-validation-for="WorkshopStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopEndTime" class="control-label"></label>
+                <input asp-for="WorkshopEndTime" class="form-control" />
+                <span asp-validation-for="WorkshopEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkshopTeacher" class="control-label"></label>
+                <input asp-for="WorkshopTeacher" class="form-control" />
+                <span asp-validation-for="WorkshopTeacher" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
