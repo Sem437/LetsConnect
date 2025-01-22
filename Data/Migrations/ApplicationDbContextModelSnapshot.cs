@@ -204,42 +204,6 @@ namespace LetsConnect.Data.Migrations
                     b.ToTable("WorkshopStudents");
                 });
 
-            modelBuilder.Entity("LetsConnect.Models.WorkshopTimes", b =>
-                {
-                    b.Property<int>("WorkshopTimeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkshopTimeId"));
-
-                    b.Property<DateOnly>("WorkshopDate")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("WorkshopEndTime")
-                        .HasColumnType("time");
-
-                    b.Property<int>("WorkshopId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkshopPlace")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WorkshopRonde")
-                        .HasColumnType("int");
-
-                    b.Property<TimeOnly>("WorkshopStartTime")
-                        .HasColumnType("time");
-
-                    b.Property<string>("WorkshopTeacher")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WorkshopTimeId");
-
-                    b.ToTable("WorkshopTimes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
